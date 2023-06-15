@@ -21,6 +21,10 @@ docker-push: ## Push docker image to remote ${IMAGE_REPOSITORY}
 docker-test: ## test file using docker image and .env variables
 	docker run -it --rm -v \${CURRENT_DIR}:/workspace --env-file .env -p 5044:5044	-p 9600:9600 -p 9700:9700 ${IMAGE_REPOSITORY}:latest
 
+.PHONY: list-plugins
+list-plugins: ## test file using docker image and .env variables
+	docker run --rm  ${IMAGE_REPOSITORY}:latest bin/logstash-plugin list --verbose
+
 .PHONY: docker-test-bash
 docker-test-bash: ## test the docker image but gives yuou a shell
 	docker run -it --rm -v \${CURRENT_DIR}:/workspace --env-file .env	${IMAGE_REPOSITORY}:latest bash
