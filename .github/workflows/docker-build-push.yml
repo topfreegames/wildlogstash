@@ -1,0 +1,30 @@
+name: Publish new Docker image
+
+on:
+  release:
+    types: [published]
+
+# on:
+#   push:
+jobs:
+  dockerhub-build-push:
+    name: DockerHub Build and Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - # Add support for more platforms with QEMU (optional)
+        # https://github.com/docker/setup-qemu-action
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Get the current release version
+        id: vars
+        run: echo "IMAGE_VERSION=$(git tag --sort=committerdate|tail -n 1)" >> $GITHUB_ENV
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Build & push the Docker image
+        run: docker buildx build . --platform linux/amd64,linux/arm64 --push --file Dockerfile --tag tfgco/beat-exporter:latest --tag tfgco/beat-exporter:${{env.IMAGE_VERSION}}

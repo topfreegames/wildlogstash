@@ -1,0 +1,8 @@
+vendor
+.cache
+.build
+.release
+.vscode
+.DS_Store
+beat-exporter
+beat-exporter.exe
