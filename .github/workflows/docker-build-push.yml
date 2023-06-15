@@ -27,4 +27,4 @@ jobs:
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Build & push the Docker image
-        run: docker buildx build . --platform linux/amd64,linux/arm64 --push --file Dockerfile --tag tfgco/beat-exporter:latest --tag tfgco/beat-exporter:${{env.IMAGE_VERSION}}
+        run: docker buildx build . --platform linux/amd64,linux/arm64 --push --file Dockerfile --tag tfgco/wildlogstash:latest --tag tfgco/wildlogstash:${{env.IMAGE_VERSION}}
