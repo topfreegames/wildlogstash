@@ -9,8 +9,9 @@ help:
 docker-build: ## Build docker image using latest as cache
 	echo "building: ${IMAGE_REPOSITORY}:${IMAGE_TAG}"
 	# docker pull ${IMAGE_REPOSITORY}:latest || true
-	DOCKER_BUILDKIT=1 docker build --cache-from ${IMAGE_REPOSITORY}:latest -t ${IMAGE_REPOSITORY}:latest . --build-arg IMAGE_TAG=${IMAGE_TAG}
+	DOCKER_BUILDKIT=1 docker build  --cache-from ${IMAGE_REPOSITORY}:latest -t ${IMAGE_REPOSITORY}:latest . --build-arg IMAGE_TAG=${IMAGE_TAG}
 	docker tag ${IMAGE_REPOSITORY}:latest ${IMAGE_REPOSITORY}:${IMAGE_TAG}
+	docker images ${IMAGE_REPOSITORY}:latest
   
 .PHONY: docker-push 
 docker-push: ## Push docker image to remote ${IMAGE_REPOSITORY}
@@ -27,7 +28,7 @@ list-plugins: ## test file using docker image and .env variables
 
 .PHONY: docker-test-bash
 docker-test-bash: ## test the docker image but gives yuou a shell
-	docker run -it --rm -v \${CURRENT_DIR}:/workspace --env-file .env	${IMAGE_REPOSITORY}:latest bash
+	docker run -it --rm  --env-file .env	${IMAGE_REPOSITORY}:latest bash
 
 .PHONY: printvars
 printvars: ## Prints make variables

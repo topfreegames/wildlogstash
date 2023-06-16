@@ -5,6 +5,8 @@ custom build of logstash for support opensearch
 ### plugins included
 
 ```shell
+$ make list-plugins
+
 logstash-codec-avro (3.4.0)
 logstash-codec-cef (6.2.6)
 logstash-codec-collectd (3.1.0)
@@ -120,7 +122,7 @@ logstash-output-stdout (3.1.4)
 logstash-output-tcp (6.1.1)
 logstash-output-udp (3.2.0)
 logstash-output-webhdfs (3.0.6)
-logstash-patterns-core (4.3.
+logstash-patterns-core (4.3.4)
 ```
 
 
