@@ -1,5 +1,5 @@
 IMAGE_REPOSITORY  ?= 797740695898.dkr.ecr.us-east-1.amazonaws.com/wildlogstash
-GIT_LAST_TAG=$(shell git tag --sort=committerdate|tail -n 1)
+GIT_LAST_TAG=$(shell git tag --sort=v:refname|tail -n 1)
 GIT_COMMIT=$(shell git rev-parse --short HEAD)
 GIT_TAG         ?=$(or ${CI_COMMIT_TAG},$(or ${GIT_LAST_TAG}, ${GIT_COMMIT} ) )
 IMAGE_TAG         ?= ${GIT_TAG}
